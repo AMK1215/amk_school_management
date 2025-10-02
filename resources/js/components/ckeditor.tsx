@@ -1,5 +1,5 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Essentials } from '@ckeditor/ckeditor5-essentials';
 import { Bold, Italic, Underline, Strikethrough } from '@ckeditor/ckeditor5-basic-styles';
 import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
