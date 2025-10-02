@@ -146,16 +146,30 @@
 }
 
 .ckeditor-wrapper .ck-editor__editable {
-    @apply min-h-[300px] border-0 rounded-md;
+    @apply min-h-[300px] border-0 rounded-md bg-background text-foreground;
+    color: hsl(var(--foreground)) !important;
 }
 
 .ckeditor-wrapper .ck-editor__editable:focus {
     @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
 }
 
+.ckeditor-wrapper .ck-editor__editable p,
+.ckeditor-wrapper .ck-editor__editable div,
+.ckeditor-wrapper .ck-editor__editable span {
+    color: hsl(var(--foreground)) !important;
+}
+
 /* Dark mode support for CKEditor */
 .dark .ckeditor-wrapper .ck-editor__editable {
     @apply bg-card text-card-foreground;
+    color: hsl(var(--card-foreground)) !important;
+}
+
+.dark .ckeditor-wrapper .ck-editor__editable p,
+.dark .ckeditor-wrapper .ck-editor__editable div,
+.dark .ckeditor-wrapper .ck-editor__editable span {
+    color: hsl(var(--card-foreground)) !important;
 }
 
 .dark .ckeditor-wrapper .ck-toolbar {
