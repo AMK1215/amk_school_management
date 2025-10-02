@@ -105,9 +105,10 @@ export default function ShowLesson({ lesson }: ShowLessonProps) {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="prose prose-sm max-w-none dark:prose-invert">
-                                        <pre className="whitespace-pre-wrap font-sans text-sm">{lesson.content}</pre>
-                                    </div>
+                                    <div 
+                                        className="prose prose-sm max-w-none dark:prose-invert"
+                                        dangerouslySetInnerHTML={{ __html: lesson.content }}
+                                    />
                                 </CardContent>
                             </Card>
                         )}

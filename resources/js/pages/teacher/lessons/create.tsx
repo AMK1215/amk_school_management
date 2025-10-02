@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import CKEditorComponent from '@/components/ckeditor';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';
@@ -234,13 +235,14 @@ export default function CreateLesson({ classSubjects }: CreateLessonProps) {
                                     {/* Content */}
                                     <div className="space-y-2 md:col-span-2">
                                         <Label htmlFor="content">Lesson Content</Label>
-                                        <Textarea
-                                            id="content"
-                                            value={data.content}
-                                            onChange={(e) => setData('content', e.target.value)}
-                                            placeholder="Detailed lesson content, notes, materials, etc."
-                                            rows={8}
-                                        />
+                                        <div className="border rounded-md">
+                                            <CKEditorComponent
+                                                value={data.content}
+                                                onChange={(content) => setData('content', content)}
+                                                placeholder="Detailed lesson content, notes, materials, etc."
+                                                className="min-h-[300px]"
+                                            />
+                                        </div>
                                         {errors.content && (
                                             <p className="text-sm text-destructive">{errors.content}</p>
                                         )}

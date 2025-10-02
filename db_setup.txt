@@ -1,0 +1,25 @@
+sudo apt install postgresql postgresql-contrib -y
+sudo systemctl status postgresql
+CREATE DATABASE school_management_db;
+CREATE USER school_db_user WITH PASSWORD 'school_manamgement_pwd';
+GRANT ALL PRIVILEGES ON DATABASE school_management_db TO school_db_user;
+ALTER USER school_db_user WITH PASSWORD 'school_manamgement_pwd';
+
+sudo -i -u postgres
+psql -d school_management_db
+
+psql -h 127.0.0.1 -U school_db_user -d school_management_db
+
+GRANT ALL ON SCHEMA public TO school_db_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO school_db_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO school_db_user;
+
+sudo -i -u postgres
+psql -d ponewine_db
+ALTER SCHEMA public OWNER TO school_db_user;
+
+sudo chown -R www-data:www-data /var/www/amk_school_management/storage
+sudo chown -R www-data:www-data /var/www/amk_school_management/bootstrap/cache
+
+sudo chmod -R 775 /var/www/amk_school_management/storage
+sudo chmod -R 775 /var/www/amk_school_management/bootstrap/cache
