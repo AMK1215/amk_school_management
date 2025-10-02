@@ -156,8 +156,13 @@
 
 .ckeditor-wrapper .ck-editor__editable p,
 .ckeditor-wrapper .ck-editor__editable div,
-.ckeditor-wrapper .ck-editor__editable span {
-    color: hsl(var(--foreground)) !important;
+.ckeditor-wrapper .ck-editor__editable span,
+.ckeditor-wrapper .ck-editor__editable * {
+    color: #000000 !important;
+}
+
+.ckeditor-wrapper .ck-editor__editable {
+    color: #000000 !important;
 }
 
 /* Dark mode support for CKEditor */
@@ -168,8 +173,13 @@
 
 .dark .ckeditor-wrapper .ck-editor__editable p,
 .dark .ckeditor-wrapper .ck-editor__editable div,
-.dark .ckeditor-wrapper .ck-editor__editable span {
-    color: hsl(var(--card-foreground)) !important;
+.dark .ckeditor-wrapper .ck-editor__editable span,
+.dark .ckeditor-wrapper .ck-editor__editable * {
+    color: #ffffff !important;
+}
+
+.dark .ckeditor-wrapper .ck-editor__editable {
+    color: #ffffff !important;
 }
 
 .dark .ckeditor-wrapper .ck-toolbar {
