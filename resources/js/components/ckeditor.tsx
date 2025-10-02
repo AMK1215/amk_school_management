@@ -20,29 +20,50 @@ export default function CKEditorComponent({
     // Load MathJax for math rendering
     useEffect(() => {
         if (typeof window !== 'undefined' && !window.MathJax) {
-            const script = document.createElement('script');
-            script.src = 'https://polyfill.io/v3/polyfill.min.js?features=es6';
-            script.async = true;
-            document.head.appendChild(script);
-
-            const mathJaxScript = document.createElement('script');
-            mathJaxScript.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-            mathJaxScript.async = true;
-            document.head.appendChild(mathJaxScript);
-
-            mathJaxScript.onload = () => {
-                if (window.MathJax) {
-                    window.MathJax = {
-                        tex: {
-                            inlineMath: [['$', '$'], ['\\(', '\\)']],
-                            displayMath: [['$$', '$$'], ['\\[', '\\]']]
-                        },
-                        options: {
-                            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            // Use the npm MathJax package
+            import('mathjax').then((MathJaxModule) => {
+                window.MathJax = {
+                    tex: {
+                        inlineMath: [['$', '$'], ['\\(', '\\)']],
+                        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                    },
+                    options: {
+                        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                    },
+                    startup: {
+                        ready: () => {
+                            MathJaxModule.startup.defaultReady();
+                            console.log('MathJax is loaded, but not yet initialized');
                         }
-                    };
-                }
-            };
+                    }
+                };
+            }).catch((error) => {
+                console.error('Failed to load MathJax:', error);
+                // Fallback to CDN
+                const script = document.createElement('script');
+                script.src = 'https://polyfill.io/v3/polyfill.min.js?features=es6';
+                script.async = true;
+                document.head.appendChild(script);
+
+                const mathJaxScript = document.createElement('script');
+                mathJaxScript.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+                mathJaxScript.async = true;
+                document.head.appendChild(mathJaxScript);
+
+                mathJaxScript.onload = () => {
+                    if (window.MathJax) {
+                        window.MathJax = {
+                            tex: {
+                                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                            },
+                            options: {
+                                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                            }
+                        };
+                    }
+                };
+            });
         }
     }, []);
 

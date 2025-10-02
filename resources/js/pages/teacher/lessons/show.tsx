@@ -53,35 +53,60 @@ export default function ShowLesson({ lesson }: ShowLessonProps) {
         if (typeof window !== 'undefined') {
             // Load MathJax if not already loaded
             if (!window.MathJax) {
-                const script = document.createElement('script');
-                script.src = 'https://polyfill.io/v3/polyfill.min.js?features=es6';
-                script.async = true;
-                document.head.appendChild(script);
-
-                const mathJaxScript = document.createElement('script');
-                mathJaxScript.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-                mathJaxScript.async = true;
-                document.head.appendChild(mathJaxScript);
-
-                mathJaxScript.onload = () => {
-                    if (window.MathJax) {
-                        window.MathJax = {
-                            tex: {
-                                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-                            },
-                            options: {
-                                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                import('mathjax').then((MathJaxModule) => {
+                    window.MathJax = {
+                        tex: {
+                            inlineMath: [['$', '$'], ['\\(', '\\)']],
+                            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                        },
+                        options: {
+                            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                        },
+                        startup: {
+                            ready: () => {
+                                MathJaxModule.startup.defaultReady();
+                                // Re-render math after MathJax is loaded
+                                setTimeout(() => {
+                                    if (window.MathJax && window.MathJax.typesetPromise) {
+                                        window.MathJax.typesetPromise();
+                                    }
+                                }, 100);
                             }
-                        };
-                        // Re-render math after MathJax is loaded
-                        setTimeout(() => {
-                            if (window.MathJax && window.MathJax.typesetPromise) {
-                                window.MathJax.typesetPromise();
-                            }
-                        }, 100);
-                    }
-                };
+                        }
+                    };
+                }).catch((error) => {
+                    console.error('Failed to load MathJax:', error);
+                    // Fallback to CDN
+                    const script = document.createElement('script');
+                    script.src = 'https://polyfill.io/v3/polyfill.min.js?features=es6';
+                    script.async = true;
+                    document.head.appendChild(script);
+
+                    const mathJaxScript = document.createElement('script');
+                    mathJaxScript.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+                    mathJaxScript.async = true;
+                    document.head.appendChild(mathJaxScript);
+
+                    mathJaxScript.onload = () => {
+                        if (window.MathJax) {
+                            window.MathJax = {
+                                tex: {
+                                    inlineMath: [['$', '$'], ['\\(', '\\)']],
+                                    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                                },
+                                options: {
+                                    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                                }
+                            };
+                            // Re-render math after MathJax is loaded
+                            setTimeout(() => {
+                                if (window.MathJax && window.MathJax.typesetPromise) {
+                                    window.MathJax.typesetPromise();
+                                }
+                            }, 100);
+                        }
+                    };
+                });
             } else {
                 // MathJax already loaded, just re-render
                 setTimeout(() => {
