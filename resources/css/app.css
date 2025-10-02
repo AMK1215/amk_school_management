@@ -223,17 +223,33 @@
 /* Dark mode support for CKEditor */
 .dark .ckeditor-wrapper .ck-editor__editable {
     @apply bg-card text-card-foreground;
-    color: hsl(var(--card-foreground)) !important;
+    background-color: hsl(var(--card)) !important;
+    color: #ffffff !important;
 }
 
 .dark .ckeditor-wrapper .ck-editor__editable p,
 .dark .ckeditor-wrapper .ck-editor__editable div,
 .dark .ckeditor-wrapper .ck-editor__editable span,
-.dark .ckeditor-wrapper .ck-editor__editable * {
+.dark .ckeditor-wrapper .ck-editor__editable *,
+.dark .ck-content p,
+.dark .ck-content div,
+.dark .ck-content span,
+.dark .ck-content * {
     color: #ffffff !important;
 }
 
-.dark .ckeditor-wrapper .ck-editor__editable {
+.dark .ck-content h1,
+.dark .ck-content h2,
+.dark .ck-content h3,
+.dark .ck-content h4,
+.dark .ck-content h5,
+.dark .ck-content h6 {
+    color: #ffffff !important;
+}
+
+.dark .ck-content blockquote,
+.dark .ck-content ol,
+.dark .ck-content ul {
     color: #ffffff !important;
 }
 
