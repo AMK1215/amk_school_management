@@ -5,6 +5,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Edit, BookOpen, GraduationCap, Calendar, Clock, FileText } from 'lucide-react';
+import { useEffect } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -47,6 +48,13 @@ interface ShowLessonProps {
 }
 
 export default function ShowLesson({ lesson }: ShowLessonProps) {
+    // Load MathJax for math rendering
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.MathJax) {
+            window.MathJax.typesetPromise();
+        }
+    }, [lesson.content]);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={lesson.title} />

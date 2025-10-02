@@ -1,5 +1,6 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useEffect } from 'react';
 
 interface CKEditorComponentProps {
     value: string;
@@ -16,9 +17,47 @@ export default function CKEditorComponent({
     disabled = false,
     className = ""
 }: CKEditorComponentProps) {
+    // Load MathJax for math rendering
+    useEffect(() => {
+        if (typeof window !== 'undefined' && !window.MathJax) {
+            const script = document.createElement('script');
+            script.src = 'https://polyfill.io/v3/polyfill.min.js?features=es6';
+            script.async = true;
+            document.head.appendChild(script);
+
+            const mathJaxScript = document.createElement('script');
+            mathJaxScript.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+            mathJaxScript.async = true;
+            document.head.appendChild(mathJaxScript);
+
+            mathJaxScript.onload = () => {
+                if (window.MathJax) {
+                    window.MathJax = {
+                        tex: {
+                            inlineMath: [['$', '$'], ['\\(', '\\)']],
+                            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                        },
+                        options: {
+                            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                        }
+                    };
+                }
+            };
+        }
+    }, []);
+
     const editorConfiguration = {
         placeholder,
-        isReadOnly: disabled
+        isReadOnly: disabled,
+        toolbar: {
+            items: [
+                'heading', '|',
+                'bold', 'italic', 'underline', '|',
+                'bulletedList', 'numberedList', '|',
+                'link', 'blockQuote', 'insertTable', '|',
+                'undo', 'redo'
+            ]
+        }
     };
 
     return (
