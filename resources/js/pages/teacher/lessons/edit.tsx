@@ -115,7 +115,7 @@ export default function EditLesson({ lesson, classSubjects }: EditLessonProps) {
                                         onValueChange={(value) => {
                                             setData('class_id', parseInt(value));
                                             setSelectedClass(parseInt(value));
-                                            setData('subject_id', ''); // Reset subject when class changes
+                                            setData('subject_id', 0); // Reset subject when class changes
                                         }}
                                     >
                                         <SelectTrigger>

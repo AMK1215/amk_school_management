@@ -50,8 +50,8 @@ export default function CreateLesson({ classSubjects }: CreateLessonProps) {
         title: '',
         description: '',
         content: '',
-        class_id: '',
-        subject_id: '',
+        class_id: 0,
+        subject_id: 0,
         lesson_date: '',
         duration_minutes: 60,
         status: 'draft' as 'draft' | 'published',
@@ -111,7 +111,7 @@ export default function CreateLesson({ classSubjects }: CreateLessonProps) {
                                             onValueChange={(value) => {
                                                 setData('class_id', parseInt(value));
                                                 setSelectedClass(parseInt(value));
-                                                setData('subject_id', ''); // Reset subject when class changes
+                                                setData('subject_id', 0); // Reset subject when class changes
                                             }}
                                         >
                                             <SelectTrigger>
